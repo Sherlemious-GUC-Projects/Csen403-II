@@ -77,14 +77,14 @@ isLegal:: Piece -> Board -> Location -> Bool
 isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == Black && y' == y + 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
-  | player == White && y' == y - 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
-  | player == Black && y == 2 && y' == y + 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' - 1)) whitePieces) && not (elem (P (a', y' - 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' - 1)) whitePieces) && not (elem (N (a', y' - 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' - 1)) whitePieces) && not (elem (B (a', y' - 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' - 1)) whitePieces) && not (elem (R (a', y' - 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' - 1)) whitePieces) && not (elem (Q (a', y' - 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' - 1)) whitePieces) && not (elem (K (a', y' - 1)) blackPieces)  = True
-  | player == White && y == 7 && y' == y - 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' + 1)) whitePieces) && not (elem (P (a', y' + 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' + 1)) whitePieces) && not (elem (N (a', y' + 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' + 1)) whitePieces) && not (elem (B (a', y' + 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' + 1)) whitePieces) && not (elem (R (a', y' + 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' + 1)) whitePieces) && not (elem (Q (a', y' + 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' + 1)) whitePieces) && not (elem (K (a', y' + 1)) blackPieces)  = True
-  | player == Black && y' == y + 1 && x' == x + 1 && elem (P (a', y')) blackPieces = True
-  | player == Black && y' == y + 1 && x' == x - 1 && elem (P (a', y')) blackPieces = True
-  | player == White && y' == y - 1 && x' == x + 1 && elem (P (a', y')) whitePieces = True
-  | player == White && y' == y - 1 && x' == x - 1 && elem (P (a', y')) whitePieces = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
+  | (elem (P (a, y)) whitePieces) && y == 2 && y' == y + 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' - 1)) whitePieces) && not (elem (P (a', y' - 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' - 1)) whitePieces) && not (elem (N (a', y' - 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' - 1)) whitePieces) && not (elem (B (a', y' - 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' - 1)) whitePieces) && not (elem (R (a', y' - 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' - 1)) whitePieces) && not (elem (Q (a', y' - 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' - 1)) whitePieces) && not (elem (K (a', y' - 1)) blackPieces)  = True
+  | (elem (P (a, y)) blackPieces) && y == 7 && y' == y - 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' + 1)) whitePieces) && not (elem (P (a', y' + 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' + 1)) whitePieces) && not (elem (N (a', y' + 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' + 1)) whitePieces) && not (elem (B (a', y' + 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' + 1)) whitePieces) && not (elem (R (a', y' + 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' + 1)) whitePieces) && not (elem (Q (a', y' + 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' + 1)) whitePieces) && not (elem (K (a', y' + 1)) blackPieces)  = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x + 1 && elem (P (a', y')) blackPieces = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x - 1 && elem (P (a', y')) blackPieces = True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x + 1 && elem (P (a', y')) whitePieces = True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x - 1 && elem (P (a', y')) whitePieces = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -93,14 +93,14 @@ isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && y' == y + 2 && ( x' == x+1 || x' == x-1) && isThereb blackPieces (a', y') = True
-  | player == White && y' == y - 2 && ( x' == x+1 || x' == x-1) && isThereb blackPieces (a', y') = True
-  | player == White && x' == x + 2 && ( y' == y+1 || y' == y-1) && isThereb blackPieces (a', y') = True
-  | player == White && x' == x - 2 && ( y' == y+1 || y' == y-1) && isThereb blackPieces (a', y') = True
-  | player == Black && y' == y + 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y - 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
-  | player == Black && x' == x + 2 && ( y' == y+1 || y' == y-1) && isTherew whitePieces (a', y') = True
-  | player == Black && x' == x - 2 && ( y' == y+1 || y' == y-1) && isTherew whitePieces (a', y') = True
+  | (elem (N (a, y)) blackPieces) && y' == y + 2 && ( x' == x+1 || x' == x-1) && isThereb blackPieces (a', y') = True
+  | (elem (N (a, y)) blackPieces) && y' == y - 2 && ( x' == x+1 || x' == x-1) && isThereb blackPieces (a', y') = True
+  | (elem (N (a, y)) blackPieces) && x' == x + 2 && ( y' == y+1 || y' == y-1) && isThereb blackPieces (a', y') = True
+  | (elem (N (a, y)) blackPieces) && x' == x - 2 && ( y' == y+1 || y' == y-1) && isThereb blackPieces (a', y') = True
+  | (elem (N (a, y)) whitePieces) && y' == y + 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
+  | (elem (N (a, y)) whitePieces) && y' == y - 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
+  | (elem (N (a, y)) whitePieces) && x' == x + 2 && ( y' == y+1 || y' == y-1) && isTherew whitePieces (a', y') = True
+  | (elem (N (a, y)) whitePieces) && x' == x - 2 && ( y' == y+1 || y' == y-1) && isTherew whitePieces (a', y') = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -110,8 +110,8 @@ isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x || y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isThereb blackPieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
-  | player == Black && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isTherew whitePieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | (elem (B (a, y)) blackPieces) && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isThereb blackPieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | (elem (B (a, y)) whitePieces) && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isTherew whitePieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -121,8 +121,8 @@ isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && (x' == x || y' == y) && isThereb blackPieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
-  | player == Black && (x' == x || y' == y) && isTherew whitePieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | (elem (R (a, y)) blackPieces) && (x' == x || y' == y) && isThereb blackPieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | (elem (R (a, y)) whitePieces) && (x' == x || y' == y) && isTherew whitePieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -131,8 +131,11 @@ isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y')
 --Queen
 isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y') 
   | x' == x && y' == y = False
+  | (elem (Q (a, y)) blackPieces) && (x' == x || y' == y) && isThereb blackPieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | (elem (Q (a, y)) whitePieces) && (x' == x || y' == y) && isTherew whitePieces (a', y') = isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  |(x' /= x && y' /= y ) && (elem (Q (a, y)) blackPieces) && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isThereb blackPieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  |(x' /= x && y' /= y ) && (elem (Q (a, y)) whitePieces) && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isTherew whitePieces (a', y') = isLegal'' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y') || isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y') = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -142,22 +145,22 @@ isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (K (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && y' == y + 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | player == White && y' == y + 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | player == White && y' == y - 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | player == White && y' == y - 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | player == White && y' == y + 1 && x' == x     && isThereb blackPieces (a', y') = True
-  | player == White && y' == y - 1 && x' == x     && isThereb blackPieces (a', y') = True
-  | player == White && y' == y     && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | player == White && y' == y     && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | player == Black && y' == y + 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y + 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y - 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y - 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y + 1 && x' == x     && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y - 1 && x' == x     && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y     && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | player == Black && y' == y     && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y     && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) blackPieces) && y' == y     && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y     && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (P (a, y)) whitePieces) && y' == y     && x' == x - 1 && isTherew whitePieces (a', y') = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -223,18 +226,12 @@ isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
     b' = convertFromIntToChar (x - 1)
     
 suggestMove:: Piece -> Board -> [Location]
-suggestMove (P (a, y)) (White, whitePieces, blackPieces) = suggestMove' (P (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (R (a, y)) (White, whitePieces, blackPieces) = suggestMove' (R (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (N (a, y)) (White, whitePieces, blackPieces) = suggestMove' (N (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (K (a, y)) (White, whitePieces, blackPieces) = suggestMove' (K (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (Q (a, y)) (White, whitePieces, blackPieces) = suggestMove' (Q (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (B (a, y)) (White, whitePieces, blackPieces) = suggestMove' (B (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
-suggestMove (P (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (P (a, y)) (White, whitePieces, blackPieces) ('a',1) []
-suggestMove (R (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (R (a, y)) (White, whitePieces, blackPieces) ('a',1) []
-suggestMove (N (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (N (a, y)) (White, whitePieces, blackPieces) ('a',1) []
-suggestMove (K (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (K (a, y)) (White, whitePieces, blackPieces) ('a',1) []
-suggestMove (Q (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (Q (a, y)) (White, whitePieces, blackPieces) ('a',1) []
-suggestMove (B (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (B (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (P (a, y)) board = suggestMove' (P (a, y)) board ('a',1) []
+suggestMove (R (a, y)) board = suggestMove' (R (a, y)) board ('a',1) []
+suggestMove (N (a, y)) board = suggestMove' (N (a, y)) board ('a',1) []
+suggestMove (K (a, y)) board = suggestMove' (K (a, y)) board ('a',1) []
+suggestMove (Q (a, y)) board = suggestMove' (Q (a, y)) board ('a',1) []
+suggestMove (B (a, y)) board = suggestMove' (B (a, y)) board ('a',1) []
 
 
 suggestMove':: Piece -> Board -> Location -> [Location] -> [Location]
