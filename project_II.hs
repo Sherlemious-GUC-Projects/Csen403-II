@@ -108,8 +108,8 @@ isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && (y - y' ) `div` ( x - x') == 1 && isTherew = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
-  | player == Black && (y - y' ) `div` ( x - x') == 1 && isThereb = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | player == White && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isTherew whitePieces (a', y') = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | player == Black && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isThereb blackPieces (a', y') = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -121,10 +121,10 @@ isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal':: Piece -> Board -> Location -> Bool
 isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | y == y' && x == x' = True 
-  | y > y' && x > x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b, y + 1)) (player, whitePieces, blackPieces) (a', y')
-  | y < y' && x < x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b', y - 1)) (player, whitePieces, blackPieces) (a', y')
-  | y > y' && x < x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b', y + 1)) (player, whitePieces, blackPieces) (a', y')
-  | y < y' && x > x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y')= isLegal' (B (b, y - 1)) (player, whitePieces, blackPieces) (a', y')
+  | y > y' && x > x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b', y- 1)) (player, whitePieces, blackPieces) (a', y')
+  | y < y' && x < x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b, y + 1)) (player, whitePieces, blackPieces) (a', y')
+  | y > y' && x < x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b, y - 1)) (player, whitePieces, blackPieces) (a', y')
+  | y < y' && x > x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b', y+ 1)) (player, whitePieces, blackPieces) (a', y')
   |otherwise = False
   where
     x = convertFromCharToInt a
