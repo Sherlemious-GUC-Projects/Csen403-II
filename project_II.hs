@@ -115,16 +115,40 @@ isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
     x = convertFromCharToInt a
     x' = convertFromCharToInt a'
 
+--Rook
+isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
+  | player == White && (x' == x || y' == y) && isTherew whitePieces (a', y') = isLegal' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | player == Black && (x' == x || y' == y) && isThereb blackPieces (a', y') = isLegal' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | otherwise = False
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
 
 
 --checks if the path to the location is clear
 isLegal':: Piece -> Board -> Location -> Bool
+--Bishop
 isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | y == y' && x == x' = True 
   | y > y' && x > x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b', y- 1)) (player, whitePieces, blackPieces) (a', y')
   | y < y' && x < x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b, y + 1)) (player, whitePieces, blackPieces) (a', y')
   | y > y' && x < x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b, y - 1)) (player, whitePieces, blackPieces) (a', y')
   | y < y' && x > x'   && isThere whitePieces blackPieces (a, y) = isLegal' (B (b', y+ 1)) (player, whitePieces, blackPieces) (a', y')
+  |otherwise = False
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x + 1)
+    b' = convertFromIntToChar (x - 1)
+--Rook
+isLegal' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | y == y' && x == x' = True 
+  | y > y'   && isThere whitePieces blackPieces (a, y) = isLegal' (R (a, y- 1)) (player, whitePieces, blackPieces) (a', y')
+  | y < y'   && isThere whitePieces blackPieces (a, y) = isLegal' (R (a, y+ 1)) (player, whitePieces, blackPieces) (a', y')
+  | x < x'   && isThere whitePieces blackPieces (a, y) = isLegal' (R (b , y)) (player, whitePieces, blackPieces) (a', y')
+  | x > x'   && isThere whitePieces blackPieces (a, y) = isLegal' (R (b', y)) (player, whitePieces, blackPieces) (a', y')
   |otherwise = False
   where
     x = convertFromCharToInt a
