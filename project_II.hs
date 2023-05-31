@@ -106,7 +106,7 @@ isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
 
 --Bishop
 isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
-  | x' == x && y' == y = False
+  | x' == x || y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
   | player == White && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isTherew whitePieces (a', y') = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | player == Black && ((y - y' ) `div` ( x - x') == 1 || (y - y' ) `div` ( x - x') == -1 ) && isThereb blackPieces (a', y') = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
@@ -125,6 +125,42 @@ isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y')
   where
     x = convertFromCharToInt a
     x' = convertFromCharToInt a'
+
+--Queen
+isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y') 
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
+  | isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y') = True
+  | isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y') = True
+  | otherwise = False
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+
+--King
+isLegal (K (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
+  | player == White && y' == y + 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | player == White && y' == y + 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | player == White && y' == y - 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | player == White && y' == y - 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | player == White && y' == y + 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | player == White && y' == y - 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | player == White && y' == y     && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | player == White && y' == y     && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | player == Black && y' == y + 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y + 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y - 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y - 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y + 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y - 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y     && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | player == Black && y' == y     && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | otherwise = False
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'    
 
 
 --checks if the path to the location is clear
