@@ -20,7 +20,7 @@ setBoard = (White, [P ('a', 2), P ('b', 2), P ('c', 2), P ('d', 2), P ('e', 2),
   B ('f', 8), Q ('d', 8), K ('e', 8)])
 
 
---     a	b    c    d    e    f    g    h
+--     a	   b    c    d    e    f    g    h     
 -- 8 | RB | NB | BB | QB | KB | BB | NB | RB |
 -- 7 | PB | PB | PB | PB | PB | PB | PB | PB |
 -- 6 |    |    |    |    |    |    |    |    |
@@ -29,6 +29,33 @@ setBoard = (White, [P ('a', 2), P ('b', 2), P ('c', 2), P ('d', 2), P ('e', 2),
 -- 3 |    |    |    |    |    |    |    |    |
 -- 2 | PW | PW | PW | PW | PW | PW | PW | PW |
 -- 1 | RW | NW | BW | QW | KW | BW | NW | RW |
+--
+--Turn: White
+
+visualizeBoard:: Board->String
+visualizeBoard (player, whitePieces, blackPieces) = (visualizeBoard' whitePieces blackPieces ('a',8) ("    a	   b    c    d    e    f    g    h  \n8 | ") ++ "\n\nTurn: " ++ show(player) )
+
+visualizeBoard' :: [Piece] -> [Piece] -> Location -> String -> String
+visualizeBoard' whitePieces blackPieces (a,y) str
+  |a == 'm' && y == 1 = str
+  |a == 'm' = visualizeBoard' whitePieces blackPieces ('a',y-1) (str ++ "\n" ++ show(y-1) ++ " | ")
+  |(elem (P (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "PW" ++ " | ")
+  |(elem (P (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "PB" ++ " | ")
+  |(elem (N (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "NW" ++ " | ")
+  |(elem (N (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "NB" ++ " | ")
+  |(elem (B (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "BW" ++ " | ")
+  |(elem (B (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "BB" ++ " | ")
+  |(elem (R (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "RW" ++ " | ")
+  |(elem (R (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "RB" ++ " | ")
+  |(elem (Q (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "QW" ++ " | ")
+  |(elem (Q (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "QB" ++ " | ")
+  |(elem (K (a, y)) whitePieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "KW" ++ " | ")
+  |(elem (K (a, y)) blackPieces) = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "KB" ++ " | ")
+  |otherwise = visualizeBoard' whitePieces blackPieces (a',y) (str ++ "   | ")
+  where
+    x = convertFromCharToInt a
+    a' = convertFromIntToChar (x + 1)
+
 
 
 visEmptyBoard = [[" "| x <- [1..8]] | y <- [1..8]]
@@ -295,3 +322,5 @@ suggestMove' (Q (a, y)) board (a', y') list
     x = convertFromCharToInt a
     x' = convertFromCharToInt a'
     b = convertFromIntToChar (x' + 1)
+
+--
