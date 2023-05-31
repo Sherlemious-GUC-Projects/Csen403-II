@@ -43,6 +43,7 @@ convertFromCharToInt x = case x of
   'f' -> 6
   'g' -> 7
   'h' -> 8
+  'm' -> 9
 
 convertFromIntToChar :: Int -> Char
 convertFromIntToChar x = case x of
@@ -54,6 +55,7 @@ convertFromIntToChar x = case x of
   6 -> 'f'
   7 -> 'g'
   8 -> 'h'
+  9 -> 'm'
 
 isThere :: [Piece] -> [Piece] -> Location -> Bool
 isThere whitePieces blackPieces (a', y')
@@ -75,14 +77,14 @@ isLegal:: Piece -> Board -> Location -> Bool
 isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | player == White && y' == y + 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
-  | player == Black && y' == y - 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
-  | player == White && y == 2 && y' == y + 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' - 1)) whitePieces) && not (elem (P (a', y' - 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' - 1)) whitePieces) && not (elem (N (a', y' - 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' - 1)) whitePieces) && not (elem (B (a', y' - 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' - 1)) whitePieces) && not (elem (R (a', y' - 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' - 1)) whitePieces) && not (elem (Q (a', y' - 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' - 1)) whitePieces) && not (elem (K (a', y' - 1)) blackPieces)  = True
-  | player == Black && y == 7 && y' == y - 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' + 1)) whitePieces) && not (elem (P (a', y' + 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' + 1)) whitePieces) && not (elem (N (a', y' + 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' + 1)) whitePieces) && not (elem (B (a', y' + 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' + 1)) whitePieces) && not (elem (R (a', y' + 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' + 1)) whitePieces) && not (elem (Q (a', y' + 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' + 1)) whitePieces) && not (elem (K (a', y' + 1)) blackPieces)  = True
-  | player == White && y' == y + 1 && x' == x + 1 && elem (P (a', y')) blackPieces = True
-  | player == White && y' == y + 1 && x' == x - 1 && elem (P (a', y')) blackPieces = True
-  | player == Black && y' == y - 1 && x' == x + 1 && elem (P (a', y')) whitePieces = True
-  | player == Black && y' == y - 1 && x' == x - 1 && elem (P (a', y')) whitePieces = True
+  | player == Black && y' == y + 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
+  | player == White && y' == y - 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
+  | player == Black && y == 2 && y' == y + 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' - 1)) whitePieces) && not (elem (P (a', y' - 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' - 1)) whitePieces) && not (elem (N (a', y' - 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' - 1)) whitePieces) && not (elem (B (a', y' - 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' - 1)) whitePieces) && not (elem (R (a', y' - 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' - 1)) whitePieces) && not (elem (Q (a', y' - 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' - 1)) whitePieces) && not (elem (K (a', y' - 1)) blackPieces)  = True
+  | player == White && y == 7 && y' == y - 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' + 1)) whitePieces) && not (elem (P (a', y' + 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' + 1)) whitePieces) && not (elem (N (a', y' + 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' + 1)) whitePieces) && not (elem (B (a', y' + 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' + 1)) whitePieces) && not (elem (R (a', y' + 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' + 1)) whitePieces) && not (elem (Q (a', y' + 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' + 1)) whitePieces) && not (elem (K (a', y' + 1)) blackPieces)  = True
+  | player == Black && y' == y + 1 && x' == x + 1 && elem (P (a', y')) blackPieces = True
+  | player == Black && y' == y + 1 && x' == x - 1 && elem (P (a', y')) blackPieces = True
+  | player == White && y' == y - 1 && x' == x + 1 && elem (P (a', y')) whitePieces = True
+  | player == White && y' == y - 1 && x' == x - 1 && elem (P (a', y')) whitePieces = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -219,3 +221,80 @@ isLegal'' (R (a, y)) (player, whitePieces, blackPieces) (a', y')
     x' = convertFromCharToInt a'
     b = convertFromIntToChar (x + 1)
     b' = convertFromIntToChar (x - 1)
+    
+suggestMove:: Piece -> Board -> [Location]
+suggestMove (P (a, y)) (White, whitePieces, blackPieces) = suggestMove' (P (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (R (a, y)) (White, whitePieces, blackPieces) = suggestMove' (R (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (N (a, y)) (White, whitePieces, blackPieces) = suggestMove' (N (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (K (a, y)) (White, whitePieces, blackPieces) = suggestMove' (K (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (Q (a, y)) (White, whitePieces, blackPieces) = suggestMove' (Q (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (B (a, y)) (White, whitePieces, blackPieces) = suggestMove' (B (a, y)) (Black, whitePieces, blackPieces) ('a',1) []
+suggestMove (P (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (P (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (R (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (R (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (N (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (N (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (K (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (K (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (Q (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (Q (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+suggestMove (B (a, y)) (Black, whitePieces, blackPieces) = suggestMove' (B (a, y)) (White, whitePieces, blackPieces) ('a',1) []
+
+
+suggestMove':: Piece -> Board -> Location -> [Location] -> [Location]
+--pawn
+suggestMove' (P (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (P (a, y)) board (b,1) list
+  | isLegal (P (a, y)) board (a', y') = suggestMove' (P (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (P (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
+--bishop
+suggestMove' (B (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (B (a, y)) board (b,1) list
+  | isLegal (B (a, y)) board (a', y') = suggestMove' (B (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (B (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
+--rook
+suggestMove' (R (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (R (a, y)) board (b,1) list
+  | isLegal (R (a, y)) board (a', y') = suggestMove' (R (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (R (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
+--knight
+suggestMove' (N (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (N (a, y)) board (b,1) list
+  | isLegal (N (a, y)) board (a', y') = suggestMove' (N (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (N (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
+--king
+suggestMove' (K (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (K (a, y)) board (b,1) list
+  | isLegal (K (a, y)) board (a', y') = suggestMove' (K (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (K (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
+--queen
+suggestMove' (Q (a, y)) board (a', y') list
+  | a' == 'm' = list
+  | y' == 9 = suggestMove' (Q (a, y)) board (b,1) list
+  | isLegal (Q (a, y)) board (a', y') = suggestMove' (Q (a, y)) board (a', y' + 1) (list ++ [(a', y')])
+  | otherwise = suggestMove' (Q (a, y)) board (a', y' + 1) list
+  where
+    x = convertFromCharToInt a
+    x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x' + 1)
