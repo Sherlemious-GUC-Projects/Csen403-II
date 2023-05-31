@@ -44,6 +44,17 @@ convertFromCharToInt x = case x of
   'g' -> 7
   'h' -> 8
 
+convertFromIntToChar :: Int -> Char
+convertFromIntToChar x = case x of
+  1 -> 'a'
+  2 -> 'b'
+  3 -> 'c'
+  4 -> 'd'
+  5 -> 'e'
+  6 -> 'f'
+  7 -> 'g'
+  8 -> 'h'
+
 isThere :: [Piece] -> [Piece] -> Location -> Bool
 isThere whitePieces blackPieces (a', y')
   |isTherew whitePieces  (a', y') && isThereb blackPieces (a', y') = True
@@ -62,6 +73,8 @@ isThereb blackPieces (a', y')
 isLegal:: Piece -> Board -> Location -> Bool
 -- pawn
 isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
   | player == White && y' == y + 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
   | player == Black && y' == y - 1 && x' == x && isThere whitePieces blackPieces (a', y')= True
   | player == White && y == 2 && y' == y + 2 && x' == x && not (elem (P (a', y')) whitePieces) && not (elem (P (a', y')) blackPieces) && not (elem (P (a', y' - 1)) whitePieces) && not (elem (P (a', y' - 1)) blackPieces) && not (elem (N (a', y')) whitePieces) && not (elem (N (a', y')) blackPieces) && not (elem (N (a', y' - 1)) whitePieces) && not (elem (N (a', y' - 1)) blackPieces)&& not (elem (B (a', y')) whitePieces) && not (elem (B (a', y')) blackPieces) && not (elem (B (a', y' - 1)) whitePieces) && not (elem (B (a', y' - 1)) blackPieces)&& not (elem (R (a', y')) whitePieces) && not (elem (R (a', y')) blackPieces) && not (elem (R (a', y' - 1)) whitePieces) && not (elem (R (a', y' - 1)) blackPieces)&& not (elem (Q (a', y')) whitePieces) && not (elem (Q (a', y')) blackPieces) && not (elem (Q (a', y' - 1)) whitePieces) && not (elem (Q (a', y' - 1)) blackPieces)&& not (elem (K (a', y')) whitePieces) && not (elem (K (a', y')) blackPieces) && not (elem (K (a', y' - 1)) whitePieces) && not (elem (K (a', y' - 1)) blackPieces)  = True
@@ -76,6 +89,8 @@ isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y')
     x' = convertFromCharToInt a'
 --Knight
 isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
   | player == White && y' == y + 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
   | player == White && y' == y - 2 && ( x' == x+1 || x' == x-1) && isTherew whitePieces (a', y') = True
   | player == White && x' == x + 2 && ( y' == y+1 || y' == y-1) && isTherew whitePieces (a', y') = True
@@ -91,23 +106,28 @@ isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y')
 
 --Bishop
 isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y')
-  | player == White && (y - y' ) `div` ( x - x') == 1 = True
-  |otherwise = False
+  | x' == x && y' == y = False
+  | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
+  | player == White && (y - y' ) `div` ( x - x') == 1 && isTherew = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | player == Black && (y - y' ) `div` ( x - x') == 1 && isThereb = isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
+  | otherwise = False
   where
     x = convertFromCharToInt a
     x' = convertFromCharToInt a'
 
 
 
-
+--checks if the path to the location is clear
 isLegal':: Piece -> Board -> Location -> Bool
 isLegal' (B (a, y)) (player, whitePieces, blackPieces) (a', y')
   | y == y' && x == x' = True 
-  | y > y' && x > x'  && (y - y' ) `div` ( x - x') == 1 = True
-  | y < y' && x < x'  && (y - y' ) `div` ( x - x') == 1 = True
-  | y > y' && x < x'  && (y - y' ) `div` ( x - x') == 1 = True
-  | y < y' && x > x'  && (y - y' ) `div` ( x - x') == 1 = True
+  | y > y' && x > x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b, y + 1)) (player, whitePieces, blackPieces) (a', y')
+  | y < y' && x < x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b', y - 1)) (player, whitePieces, blackPieces) (a', y')
+  | y > y' && x < x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y') = isLegal' (B (b', y + 1)) (player, whitePieces, blackPieces) (a', y')
+  | y < y' && x > x'  && (y - y' ) `div` ( x - x') == 1 && isThere whitePieces blackPieces (a', y')= isLegal' (B (b, y - 1)) (player, whitePieces, blackPieces) (a', y')
   |otherwise = False
   where
     x = convertFromCharToInt a
     x' = convertFromCharToInt a'
+    b = convertFromIntToChar (x + 1)
+    b' = convertFromIntToChar (x - 1)
