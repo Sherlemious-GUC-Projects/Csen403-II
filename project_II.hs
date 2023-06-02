@@ -176,22 +176,22 @@ isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y')
 isLegal (K (a, y)) (player, whitePieces, blackPieces) (a', y')
   | x' == x && y' == y = False
   | x'> 8 || x' < 1 || y' > 8 || y' < 1 = False
-  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y + 1 && x' == x     && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y - 1 && x' == x     && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y     && x' == x + 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) blackPieces) && y' == y     && x' == x - 1 && isThereb blackPieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y + 1 && x' == x     && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y - 1 && x' == x     && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y     && x' == x + 1 && isTherew whitePieces (a', y') = True
-  | (elem (P (a, y)) whitePieces) && y' == y     && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y + 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y + 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y - 1 && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y - 1 && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y + 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y - 1 && x' == x     && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y     && x' == x + 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) blackPieces) && y' == y     && x' == x - 1 && isThereb blackPieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y + 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y + 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y - 1 && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y - 1 && x' == x - 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y + 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y - 1 && x' == x     && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y     && x' == x + 1 && isTherew whitePieces (a', y') = True
+  | (elem (K (a, y)) whitePieces) && y' == y     && x' == x - 1 && isTherew whitePieces (a', y') = True
   | otherwise = False
   where
     x = convertFromCharToInt a
@@ -329,12 +329,68 @@ suggestMove' (Q (a, y)) board (a', y') list
 
 --move
 move:: Piece -> Location -> Board -> Board
-move (_ (a, y)) (a', y') (player, whitePieces, blackPieces) 
-  | (elem (_ (a, y)) whitePieces) && player == Black = error "Program error: This is White player’s turn, Black can’t move." 
-  | (elem (_ (a, y)) blackPieces) && player == White = error "Program error: This is Black player’s turn, White can’t move."
-  | isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y') = (player, whitePieces', blackPieces')
+move ( P (a, y)) (a', y') (player, whitePieces, blackPieces) 
+  | (elem ( P (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move." 
+  | (elem ( P (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( P (a, y)) whitePieces) && player == White && isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(P (a', y'))], blackPieces')
+  | (elem ( P (a, y)) blackPieces) && player == Black && isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(P (a', y'))])
   --otherwise we throw an error
-  | otherwise = error ("Program error: Illegal move for piece " + show(P (a, y)) )
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(P (a, y)) )
   where
-    whitePieces' = move' (P (a, y)) (a', y') whitePieces
-    blackPieces' = move' (P (a, y)) (a', y') blackPieces
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (P (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (P (a, y)) ) blackPieces
+
+move ( R (a, y)) (a', y') (player, whitePieces, blackPieces)
+  | (elem ( R (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move." 
+  | (elem ( R (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( R (a, y)) whitePieces) && player == White && isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(R (a', y'))], blackPieces')
+  | (elem ( R (a, y)) blackPieces) && player == Black && isLegal (R (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(R (a', y'))])
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(R (a, y)) )
+  where
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (R (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (R (a, y)) ) blackPieces
+
+move ( N (a, y)) (a', y') (player, whitePieces, blackPieces)
+  | (elem ( N (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move."
+  | (elem ( N (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( N (a, y)) whitePieces) && player == White && isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(N (a', y'))], blackPieces')
+  | (elem ( N (a, y)) blackPieces) && player == Black && isLegal (N (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(N (a', y'))])
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(N (a, y)) )
+  where
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (N (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (N (a, y)) ) blackPieces
+
+move ( B (a, y)) (a', y') (player, whitePieces, blackPieces)
+  | (elem ( B (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move."
+  | (elem ( B (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( B (a, y)) whitePieces) && player == White && isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(B (a', y'))], blackPieces')
+  | (elem ( B (a, y)) blackPieces) && player == Black && isLegal (B (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(B (a', y'))])
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(B (a, y)) )
+  where
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (B (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (B (a, y)) ) blackPieces
+
+move ( Q (a, y)) (a', y') (player, whitePieces, blackPieces)
+  | (elem ( Q (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move."
+  | (elem ( Q (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( Q (a, y)) whitePieces) && player == White && isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(Q (a', y'))], blackPieces')
+  | (elem ( Q (a, y)) blackPieces) && player == Black && isLegal (Q (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(Q (a', y'))])
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(Q (a, y)) )
+  where
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (Q (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (Q (a, y)) ) blackPieces
+
+move ( K (a, y)) (a', y') (player, whitePieces, blackPieces)
+  | (elem ( K (a, y)) whitePieces) && player == Black = error "Program error: This is White player's turn, Black can't move."
+  | (elem ( K (a, y)) blackPieces) && player == White = error "Program error: This is Black player's turn, White can't move."
+  | (elem ( K (a, y)) whitePieces) && player == White && isLegal (K (a, y)) (player, whitePieces, blackPieces) (a', y') = (Black, whitePieces' ++ [(K (a', y'))], blackPieces')
+  | (elem ( K (a, y)) blackPieces) && player == Black && isLegal (K (a, y)) (player, whitePieces, blackPieces) (a', y') = (White, whitePieces', blackPieces' ++ [(K (a', y'))])
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " ++ show(K (a, y)) )
+  where
+    whitePieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (K (a, y)) ) whitePieces
+    blackPieces' = filter (\x -> x /= (P (a', y')) && x /= (R (a', y')) && x /= (N (a', y')) && x /= (B (a', y')) && x /= (Q (a', y')) && x /= (K (a', y')) && x /= (K (a, y)) ) blackPieces
