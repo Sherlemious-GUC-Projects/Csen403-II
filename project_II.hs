@@ -5,6 +5,9 @@ data Piece = P Location | N Location | K Location | Q Location | R Location
   | B Location deriving (Show, Eq)
 type Board = (Player, [Piece], [Piece])
 
+data Exception = InvalidMove | InvalidPiece | InvalidLocation | InvalidPlayer
+  | InvalidBoard deriving (Show, Eq)
+
 printPiecew :: Board -> [Piece]
 printPiecew (player, whitePieces, blackPieces) = whitePieces
 
@@ -32,9 +35,10 @@ setBoard = (White, [P ('a', 2), P ('b', 2), P ('c', 2), P ('d', 2), P ('e', 2),
 --
 --Turn: White
 
-visualizeBoard:: Board->String
-visualizeBoard (player, whitePieces, blackPieces) = (visualizeBoard' whitePieces blackPieces ('a',8) ("    a	   b    c    d    e    f    g    h  \n8 | ") ++ "\n\nTurn: " ++ show(player) )
-
+visualizeBoard'' :: Board->String
+visualizeBoard'' (player, whitePieces, blackPieces) = (visualizeBoard' whitePieces blackPieces ('a',8) ("    a	   b    c    d    e    f    g    h  \n8 | ") ++ "\n\nTurn: " ++ show(player) )
+visualizeBoard:: Board -> IO()
+visualizeBoard (player, whitePieces, blackPieces) = putStr (visualizeBoard'' (player, whitePieces, blackPieces))
 visualizeBoard' :: [Piece] -> [Piece] -> Location -> String -> String
 visualizeBoard' whitePieces blackPieces (a,y) str
   |a == 'm' && y == 1 = str
@@ -323,4 +327,14 @@ suggestMove' (Q (a, y)) board (a', y') list
     x' = convertFromCharToInt a'
     b = convertFromIntToChar (x' + 1)
 
---
+--move
+move:: Piece -> Location -> Board -> Board
+move (_ (a, y)) (a', y') (player, whitePieces, blackPieces) 
+  | (elem (_ (a, y)) whitePieces) && player == Black = error "Program error: This is White player’s turn, Black can’t move." 
+  | (elem (_ (a, y)) blackPieces) && player == White = error "Program error: This is Black player’s turn, White can’t move."
+  | isLegal (P (a, y)) (player, whitePieces, blackPieces) (a', y') = (player, whitePieces', blackPieces')
+  --otherwise we throw an error
+  | otherwise = error ("Program error: Illegal move for piece " + show(P (a, y)) )
+  where
+    whitePieces' = move' (P (a, y)) (a', y') whitePieces
+    blackPieces' = move' (P (a, y)) (a', y') blackPieces
